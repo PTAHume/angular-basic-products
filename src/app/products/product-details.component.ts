@@ -6,6 +6,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductDetailsComponent implements OnInit {
   constructor() {}
-
+  pageTitle: string = '';
   ngOnInit(): void {}
 }
