@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-2">Filter by: {{listFilter}}</div>
       <div class="col-md-4">
-        <input type='text' [(ngModel)]='listFilter' />
+        <input title="listFilter" placeholder="please type here" type='text' [(ngModel)]='listFilter' />
       </div>
     </div>
     <div class="row">
@@ -28,14 +28,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor='let product of products'>
+              <tr *ngFor='let product of filteredProducts'>
                 <td><img *ngIf='showImage' [src]='product.imageUrl' [title]='product.imageUrl' [alt]='product.imageUrl'
                     [style.width.px]='imageWidth' [style.margin.px]='imageMargin' /></td>
                 <td>{{ product.productName | uppercase}}</td>
-                <td>{{ product.productCode | lowercase }}</td>
+                <td>{{ product.productCode | convertToSpaces:'-' }}</td>
                 <td>{{ product.releaseDate }}</td>
                 <td>{{ product.price | currency: 'GBP' : 'symbol': '1.2-2' | lowercase }}</td>
-                <td>{{ product.starRating }}</td>
+                <td>
+                  <pm-star (change)="onChange($event)" [rating]="product.starRating"></pm-star>
+                </td>
               </tr>
             </tbody>
           </table>
