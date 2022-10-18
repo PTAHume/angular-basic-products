@@ -23,12 +23,13 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot([
       { path: 'products', component: ProductListComponent },
       { path: 'product/:id', component: ProductDetailsComponent },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-      { path: '**', redirectTo: 'welcome' },
+      { path: '**', redirectTo: 'welcome', pathMatch: 'full' },
     ]),
   ],
   bootstrap: [AppComponent],

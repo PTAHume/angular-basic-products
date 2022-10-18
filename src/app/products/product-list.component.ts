@@ -1,14 +1,14 @@
 import { ProductsService } from './../../api/products.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import IProduct from './IProduct';
-import { Subscribable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'pm-products',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
 export default class ProductListComponent implements OnInit, OnDestroy {
-  title = 'Product List';
+  pageTitle = 'Product List';
   message = '';
   imageWidth = 50;
   imageMargin = 2;
