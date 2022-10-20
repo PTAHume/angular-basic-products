@@ -14,14 +14,18 @@ export default class ProductDetailsComponent implements OnInit {
     private service: ProductsService,
     private route: Router
   ) {}
-  pageTitle: string = '';
+  pageTitle = 'Product Detail';
   sub!: Subscription;
   product: IProduct | undefined;
 
   ngOnInit(): void {
     //if pram dose not change gets the value at a given point in time
     const Id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-    this.pageTitle = 'foo';
+    if (Id) {
+      this.sub = this.service
+        .getProductById(Id)
+        .subscribe((res) => (this.product = res));
+    }
   }
   onBack() {
     this.route.navigate(['/products']);
