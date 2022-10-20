@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  templateUrl: './welcome.component.html'
+  templateUrl: './welcome.component.html',
 })
-export class WelcomeComponent {
+export default class WelcomeComponent {
   public pageTitle = 'Welcome';
 }

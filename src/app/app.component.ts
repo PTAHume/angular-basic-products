@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'Angular: Getting Started';
+export default class AppComponent {
+  pageTitle = 'Angular: Getting Started';
 }
