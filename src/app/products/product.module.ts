@@ -1,24 +1,19 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 
-import ProductListComponent from './product-list.component';
-import ProductDetailsComponent from './product-details.component';
-import ProductDetailGuard from './product-detail.guard';
-import SharedModule from '../shared/shared.module';
+import { ProductListComponent } from './product-list.component';
+import { ProductDetailComponent } from './product-detail.component';
+import { ProductEditComponent } from './product-edit/product-edit.component';
+
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [ProductListComponent, ProductDetailsComponent],
   imports: [
-    RouterModule,
-    RouterModule.forChild([
-      { path: 'products', component: ProductListComponent },
-      {
-        path: 'product/:id',
-        canActivate: [ProductDetailGuard],
-        component: ProductDetailsComponent,
-      },
-    ]),
-    SharedModule,
+    SharedModule
   ],
+  declarations: [
+    ProductListComponent,
+    ProductDetailComponent,
+    ProductEditComponent
+  ]
 })
-export default class ProductModule {}
+export class ProductModule { }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  templateUrl: './welcome.component.html',
+  selector: 'pm-home',
+  templateUrl: './welcome.component.html'
 })
-export default class WelcomeComponent {
+export class WelcomeComponent {
   public pageTitle = 'Welcome';
 }

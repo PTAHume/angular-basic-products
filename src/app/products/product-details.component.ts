@@ -1,8 +1,9 @@
-import { ProductsService } from './../../api/products.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import IProduct from './IProduct';
 import { Subscription } from 'rxjs';
+
+import IProduct from './IProduct';
+import ProductService from './../../api/products.service';
 
 @Component({
   templateUrl: './product-details.component.html',
@@ -11,12 +12,13 @@ import { Subscription } from 'rxjs';
 export default class ProductDetailsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
-    private service: ProductsService,
+    private service: ProductService,
     private route: Router
   ) {}
   pageTitle = 'Product Detail';
   sub!: Subscription;
   product: IProduct | undefined;
+  errorMessage = '';
 
   ngOnInit(): void {
     //if pram dose not change gets the value at a given point in time

@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap, catchError, throwError, map } from 'rxjs';
-import IProduct from '../app/products/IProduct';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
+import IProduct from '../app/products/IProduct';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductsService {
+export default class ProductService {
+  deleteProduct(id: number) {
+    throw new Error('Method not implemented.');
+  }
+  updateProduct(product: IProduct) {
+    throw new Error('Method not implemented.');
+  }
+  createProduct(product: IProduct) {
+    throw new Error('Method not implemented.');
+  }
   apiURL: string = 'api/products/products.json';
 
   constructor(private httpClient: HttpClient) {}
@@ -19,7 +29,7 @@ export class ProductsService {
   getProductById(Id: number): Observable<IProduct | undefined> {
     return this.getProducts().pipe(
       map((products: IProduct[]) =>
-        products.find((product) => product.productId === Id)
+        products.find((product) => product.id === Id)
       )
     );
   }
