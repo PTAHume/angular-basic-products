@@ -13,6 +13,7 @@ export class ProductEditComponent implements OnInit {
   pageTitle = 'Product Edit';
   errorMessage: string | undefined;
   product: Product | null = null;
+  private dateIsValid: { [key: string]: boolean } = {};
 
   constructor(
     private productService: ProductService,
@@ -49,6 +50,41 @@ export class ProductEditComponent implements OnInit {
     }
   }
 
+  isValid(path?: string): boolean {
+    this.validate();
+    if (path) {
+      return this.dateIsValid[path];
+    }
+    return (
+      this.dateIsValid &&
+      Object.keys(this.dateIsValid).every(
+        (data) => this.dateIsValid[data] === true
+      )
+    );
+  }
+
+  validate(): void {
+    this.dateIsValid = {};
+
+    // info
+    if (
+      this.product?.productName &&
+      this.product.productName.length >= 3 &&
+      this.product?.productCode
+    ) {
+      this.dateIsValid['info'] = true;
+    } else {
+      this.dateIsValid['info'] = false;
+    }
+
+    // tabs
+    if (this.product?.category && this.product.category.length >= 3) {
+      this.dateIsValid['tags'] = true;
+    } else {
+      this.dateIsValid['tags'] = false;
+    }
+  }
+
   deleteProduct(): void {
     if (!this.product || !this.product.id) {
       // Don't delete, it was never saved.
@@ -66,25 +102,27 @@ export class ProductEditComponent implements OnInit {
 
   saveProduct(): void {
     if (this.product) {
-      if (this.product.id === 0) {
-        this.productService.createProduct(this.product).subscribe({
-          next: () =>
-            this.onSaveComplete(
-              `The new ${this.product?.productName} was saved`
-            ),
-          error: (err) => (this.errorMessage = err),
-        });
+      if (this.isValid()) {
+        if (this.product?.id === 0) {
+          this.productService.createProduct(this.product).subscribe({
+            next: () =>
+              this.onSaveComplete(
+                `The new ${this.product?.productName} was saved`
+              ),
+            error: (err) => (this.errorMessage = err),
+          });
+        } else {
+          this.productService.updateProduct(this.product).subscribe({
+            next: () =>
+              this.onSaveComplete(
+                `The updated ${this.product?.productName} was saved`
+              ),
+            error: (err) => (this.errorMessage = err),
+          });
+        }
       } else {
-        this.productService.updateProduct(this.product).subscribe({
-          next: () =>
-            this.onSaveComplete(
-              `The updated ${this.product?.productName} was saved`
-            ),
-          error: (err) => (this.errorMessage = err),
-        });
+        this.errorMessage = 'Please correct the validation errors.';
       }
-    } else {
-      this.errorMessage = 'Please correct the validation errors.';
     }
   }
 
