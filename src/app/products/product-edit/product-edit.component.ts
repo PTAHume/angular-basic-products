@@ -1,9 +1,8 @@
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { MessageService } from '../../messages/message.service';
-
-import { Product } from '../product';
+import { Product, ProductResolved } from '../product';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -12,8 +11,7 @@ import { ProductService } from '../product.service';
 })
 export class ProductEditComponent implements OnInit {
   pageTitle = 'Product Edit';
-  errorMessage = '';
-
+  errorMessage: string | undefined;
   product: Product | null = null;
 
   constructor(
@@ -23,8 +21,10 @@ export class ProductEditComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.route.paramMap.subscribe((prams: ParamMap) => {
-      this.getProduct(Number(prams.get('id')));
+    this.route.data.subscribe((data) => {
+      const resoledData: ProductResolved = data['resolvedData'];
+      this.errorMessage = resoledData.error;
+      this.onProductRetrieved(resoledData.product);
     });
   }
 
@@ -35,7 +35,7 @@ export class ProductEditComponent implements OnInit {
     });
   }
 
-  onProductRetrieved(product: Product): void {
+  onProductRetrieved(product: Product | null): void {
     this.product = product;
 
     if (!this.product) {
