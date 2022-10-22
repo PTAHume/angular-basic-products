@@ -1,4 +1,5 @@
-export default interface IProduct {
+/* Defines the product entity */
+export interface Product {
   id: number | null;
   productName: string;
   productCode: string;
@@ -11,7 +12,7 @@ export default interface IProduct {
   imageUrl: string;
 }
 
-export default interface ProductResolved {
-  product: IProduct | null;
+export interface ProductResolved {
+  product: Product | null;
   error?: string;
 }
